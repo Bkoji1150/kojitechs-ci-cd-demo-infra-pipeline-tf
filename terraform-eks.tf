@@ -25,18 +25,18 @@ resource "aws_security_group_rule" "this" {
 resource "aws_eks_cluster" "eks_cluster" {
   name     = format("%s-%s-%s", var.ado, var.component_name, local.cluster_name)
   role_arn = aws_iam_role.eks_master_role.arn
-  version = var.cluster_version
+  version = var.cluster_version # ToDo
 
   vpc_config {
     subnet_ids = local.public_subnet 
-    endpoint_private_access = var.cluster_endpoint_private_access
-    endpoint_public_access  = var.cluster_endpoint_public_access
-    public_access_cidrs     = var.cluster_endpoint_public_access_cidrs    
+    endpoint_private_access = var.cluster_endpoint_private_access # ToDo
+    endpoint_public_access  = var.cluster_endpoint_public_access # ToDo
+    public_access_cidrs     = var.cluster_endpoint_public_access_cidrs  # ToDo
 
   }
 
   kubernetes_network_config {
-    service_ipv4_cidr = var.cluster_service_ipv4_cidr
+    service_ipv4_cidr = var.cluster_service_ipv4_cidr # ToDo
   }
 
   # Enable EKS Cluster Control Plane Logging
