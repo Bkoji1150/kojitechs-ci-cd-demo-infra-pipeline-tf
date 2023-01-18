@@ -6,6 +6,13 @@
 terraform {
   required_version = ">=1.1.0" 
 
+  backend "s3" {
+    bucket         = "kojitechs.aws.eks.with.terraform.tf"
+    dynamodb_table = "terraform-lock"
+    key            = "path/env/kojitechs-ci-cd-demo-infra-pipeline-tf"
+    region         = "us-east-1"
+    encrypt        = "true"
+  }
   required_providers {
     aws = {
       source  = "hashicorp/aws"
@@ -29,7 +36,6 @@ provider "aws" {
 locals {
   vpc_id   = module.vpc.vpc_id
 }
-
 
 ################################################################################
 # DATA SOURCE BLOCK
@@ -79,7 +85,6 @@ resource "aws_instance" "sonarqube-server" {
     Name = "sonarqube-server"
   }
 }
-
 
 ################################################################################
 # MODULES BLOCK
