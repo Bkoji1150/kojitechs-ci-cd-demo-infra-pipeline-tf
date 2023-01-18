@@ -28,3 +28,9 @@ variable "cluster_endpoint_public_access_cidrs" {
   type        = list(string)
   default     = ["0.0.0.0/0"]
 }
+
+variable "cluster_service_ipv4_cidr" {
+    type = string
+    description = "(optional) describe your variable"
+    default = null
+}

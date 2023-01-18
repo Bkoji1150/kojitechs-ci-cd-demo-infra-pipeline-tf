@@ -5,7 +5,7 @@ locals {
  private_subnet =  module.vpc.private_subnets
    eks_nodegroup = {
     pulic_nodegroup ={
-        name = format("%s_%s_%s", var.ado, var.component_name, "public")
+        name = format("%s-%s", var.component_name, "public")
         subnet = slice(local.public_subnet, 0, 3)
     }
   }
@@ -23,7 +23,7 @@ resource "aws_security_group_rule" "this" {
 
 # Create AWS EKS Cluster
 resource "aws_eks_cluster" "eks_cluster" {
-  name     = format("%s-%s-%s", var.ado, var.component_name, local.cluster_name)
+  name     =  "${var.component_name}-eks-demo"
   role_arn = aws_iam_role.eks_master_role.arn
   version = var.cluster_version # ToDo
 
@@ -64,8 +64,8 @@ disk_size = 20
 instance_types = ["t3.medium"]
 
   scaling_config {
-    desired_size = 1
-    max_size     = 3
+    desired_size = 1 
+    max_size     = 3 
     min_size     = 1
   }
 
