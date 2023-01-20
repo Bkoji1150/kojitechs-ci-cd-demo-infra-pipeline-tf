@@ -1,4 +1,3 @@
-
 #!/bin/bash
 # Installing JAVA && Jenkins 
 sudo yum update –y
@@ -19,11 +18,11 @@ pip3 install ansible
 # Installing Docker 
 yum install docker -y
 service docker start
-service docker status
 sudo useradd dockeradmin
 # sudo passwd dockeradmin TODO LIST
 sudo usermod -aG docker dockeradmin
-sudo chmod 666 /var/run/docker.sock
+sudo usermod -aG docker jenkins
+sudo chmod 777 /var/run/docker.sock
 # install Sonarqube scanner
 mkdir sonnar-canna && cd sonnar-canna
 sudo unzip sonar-scanner-cli-4.6.2.2472-linux.zip
@@ -34,16 +33,16 @@ wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scann
 # Installing maven
 sudo su
 mkdir /opt/maven && cd /opt/maven
-
-wget https://dlcdn.apache.org/maven/maven-3/3.0.5/binaries/apache-maven-3.0.5-bin.tar.gz
-#wget https://dlcdn.apache.org/maven/maven-3/3.8.4/binaries/apache-maven-3.8.4-bin.tar.gz
-tar -xvzf apache-maven-3.0.5-bin.tar.gz
+wget https://mirror.lyrahosting.com/apache/maven/maven-3/3.8.7/binaries/apache-maven-3.8.7-bin.tar.gz
+tar -xvzf apache-maven-3.8.7-bin.tar.gz
 # echo  "JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.302.b08-0.amzn2.M2_HOME=/opt/maven/apache-maven-3.8.4 M2=$M2_HOME/bin PATH=$PATH:$HOME/bin:$M2_HOME:$M2:$JAVA_HOME" > file10.1.x86_64  
 # cat >> ~/.bash_profile 
-# JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.302.b08-0.amzn2.0.1.x86_64
-# M2_HOME=/opt/maven/apache-maven-3.0.5/bin
+# User specific environment and startup programs
+# JAVA_HOME=/usr/lib/jvm/java-11-openjdk-11.0.16.0.8-1.amzn2.0.1.x86_64
+# M2_HOME=/opt/apache-maven-3.8.7/bin
 # M2=$M2_HOME/bin
-# PATH=$PATH:$HOME/bin:$M2_HOME:$M2:$JAVA_HOME 
+# PATH=$PATH:$HOME/bin:$M2_HOME:$M2:$JAVA_HOME
+# export PATH
 sudo useradd ansible
 sudo useradd jenkins
 sudo -u jenkins mkdir /home/jenkins.ssh
