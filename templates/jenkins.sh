@@ -1,6 +1,8 @@
 #!/bin/bash
 # Installing JAVA && Jenkins 
 sudo yum update –y
+sudo yum install java-11-amazon-corretto-headless -y 
+sudo yum remove java-17-amazon-corretto-headless -y
 sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
 sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
 sudo yum upgrade
@@ -35,15 +37,10 @@ sudo su
 mkdir /opt/maven && cd /opt/maven
 wget https://mirror.lyrahosting.com/apache/maven/maven-3/3.8.7/binaries/apache-maven-3.8.7-bin.tar.gz
 tar -xvzf apache-maven-3.8.7-bin.tar.gz
-# echo  "JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.302.b08-0.amzn2.M2_HOME=/opt/maven/apache-maven-3.8.4 M2=$M2_HOME/bin PATH=$PATH:$HOME/bin:$M2_HOME:$M2:$JAVA_HOME" > file10.1.x86_64  
-# cat >> ~/.bash_profile 
 
- 
-# JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.302.b08-0.amzn2.0.1.x86_64
-# M2_HOME=/opt/maven/apache-maven-3.8.7/bin
-# M2=$M2_HOME/bin
-# PATH=$PATH:$HOME/bin:$M2_HOME:$M2:$JAVA_HOME 
-# export PATH
+echo 'M2_HOME=/opt/maven/apache-maven-3.8.7/bin' >> ~/.bash_profile
+echo 'export PATH=$PATH:$HOME/bin:$M2_HOME' >> ~/.bash_profile
+sudo source ~/.bash_profile
 
 sudo useradd ansible
 sudo useradd jenkins
@@ -67,3 +64,9 @@ sudo yum -y install terraform
 sudo curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
 sudo chmod 700 get_helm.sh
 sudo bash get_helm.sh
+## install kubelet
+sudo curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.19.6/2021-01-05/bin/linux/amd64/kubectl
+sudo chmod +x ./kubectl
+sudo mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
+sudo echo 'export PATH=$PATH:$HOME/bin' >> ~/.bashrc
+sudo kubectl version --short --client
