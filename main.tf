@@ -4,7 +4,7 @@
 ################################################################################
 
 terraform {
-  required_version = ">=1.1.0" 
+  required_version = ">=1.1.0"
 
   backend "s3" {
     bucket         = "kojitechs.aws.eks.with.terraform.tf" # s3 bucket 
@@ -35,7 +35,7 @@ provider "aws" {
 ################################################################################
 
 locals {
-  vpc_id   = module.vpc.vpc_id
+  vpc_id                        = module.vpc.vpc_id
   eks_default_security_group_id = aws_eks_cluster.eks_cluster.vpc_config[0].cluster_security_group_id
 }
 
@@ -72,7 +72,7 @@ module "vpc" {
   name = "${var.component_name}-vpc"
   cidr = "10.0.0.0/16"
 
-  azs             = slice(data.aws_availability_zones.available.names,0 ,3)
+  azs             = slice(data.aws_availability_zones.available.names, 0, 3)
   private_subnets = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
   public_subnets  = ["10.0.101.0/24", "10.0.102.0/24", "10.0.103.0/24"]
 
@@ -85,13 +85,13 @@ module "vpc" {
   create_flow_log_cloudwatch_log_group = true
 
   public_subnet_tags = {
-    Type                                        = "Public Subnets"
-    "kubernetes.io/role/elb"                    = 1
+    Type                                                   = "Public Subnets"
+    "kubernetes.io/role/elb"                               = 1
     "kubernetes.io/cluster/${var.component_name}-eks-demo" = "shared"
   }
   private_subnet_tags = {
-    Type                                        = "private-subnets"
-    "kubernetes.io/role/internal-elb"           = 1
+    Type                                                   = "private-subnets"
+    "kubernetes.io/role/internal-elb"                      = 1
     "kubernetes.io/cluster/${var.component_name}-eks-demo" = "shared"
   }
   database_subnet_tags = {
@@ -104,35 +104,35 @@ module "vpc" {
 ################################################################################
 
 resource "aws_instance" "jenkins-server" {
-  ami           = data.aws_ami.ami.id
-  instance_type = "t3.large"
-  subnet_id = module.vpc.public_subnets[0]
+  ami                    = data.aws_ami.ami.id
+  instance_type          = "t3.large"
+  subnet_id              = module.vpc.public_subnets[0]
   vpc_security_group_ids = [aws_security_group.jenkins_sg.id]
-  iam_instance_profile = aws_iam_instance_profile.jenkins_instance_profile.name
+  iam_instance_profile   = aws_iam_instance_profile.jenkins_instance_profile.name
 
-  user_data = file("${path.module}/templates/jenkins.sh")  
+  user_data = file("${path.module}/templates/jenkins.sh")
 
   tags = {
     Name = "jenkins-server"
   }
   lifecycle {
     ignore_changes = [
-        user_data,
+      user_data,
     ]
   }
 }
 
 resource "aws_instance" "sonarqube-server" {
-  ami           = data.aws_ami.ami.id
-  instance_type ="t3.large"
-  subnet_id = module.vpc.public_subnets[0] 
+  ami                    = data.aws_ami.ami.id
+  instance_type          = "t3.large"
+  subnet_id              = module.vpc.public_subnets[0]
   vpc_security_group_ids = [aws_security_group.sonarqube_sg.id]
-  iam_instance_profile = aws_iam_instance_profile.instance_profile.name
-   user_data = file("${path.module}/templates/sonarqube.sh") 
+  iam_instance_profile   = aws_iam_instance_profile.instance_profile.name
+  user_data              = file("${path.module}/templates/sonarqube.sh")
 
-   lifecycle {
+  lifecycle {
     ignore_changes = [
-        user_data,
+      user_data,
     ]
   }
   tags = {

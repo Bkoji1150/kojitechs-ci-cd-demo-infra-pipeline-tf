@@ -1,8 +1,8 @@
 
 variable "component_name" {
-    type = string
-    description = "(optional) describe your variable"
-    default = "ci-cd-demo"
+  type        = string
+  description = "(optional) describe your variable"
+  default     = "ci-cd-demo"
 }
 
 ###### EKS CLUSTER VARIABLES
@@ -30,7 +30,7 @@ variable "cluster_endpoint_public_access_cidrs" {
 }
 
 variable "cluster_service_ipv4_cidr" {
-    type = string
-    description = "(optional) describe your variable"
-    default = null
+  type        = string
+  description = "(optional) describe your variable"
+  default     = null
 }

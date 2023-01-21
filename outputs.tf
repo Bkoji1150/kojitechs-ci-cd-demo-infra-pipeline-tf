@@ -1,17 +1,17 @@
 
 output "jenkins-host-ip" {
-    description = "Jenkins host public IP address"
-    value = "http://${aws_instance.jenkins-server.public_ip}:8080"
+  description = "Jenkins host public IP address"
+  value       = "http://${aws_instance.jenkins-server.public_ip}:8080"
 }
 
 output "sonarqube-host-ip" {
-    description = "Jenkins host public IP address"
-    value = "http://${aws_instance.sonarqube-server.public_ip}:9000"
+  description = "Jenkins host public IP address"
+  value       = "http://${aws_instance.sonarqube-server.public_ip}:9000"
 }
 
 output "aws-ecr-repo" {
-    description = "the name of aws ecr repo"
-    value = aws_ecr_repository.this.name
+  description = "the name of aws ecr repo"
+  value       = aws_ecr_repository.this.name
 }
 
 ################################
@@ -29,7 +29,7 @@ output "cluster_arn" {
 output "cluster_certificate_authority_data" {
   description = "Nested attribute containing certificate-authority-data for your cluster. This is the base64 encoded certificate data required to communicate with your cluster."
   value       = aws_eks_cluster.eks_cluster.certificate_authority[0].data
-  sensitive = true
+  sensitive   = true
 }
 
 output "cluster_endpoint" {
@@ -44,7 +44,7 @@ output "cluster_version" {
 
 output "cluster_iam_role_name" {
   description = "IAM role name of the EKS cluster."
-  value       = aws_iam_role.eks_master_role.name 
+  value       = aws_iam_role.eks_master_role.name
 }
 
 output "cluster_iam_role_arn" {
@@ -65,28 +65,28 @@ output "cluster_oidc_issuer_url" {
 # Node group outputs
 output "node_group_public_id" {
   description = "Node Group ID"
-  value       = {for id, node_group in aws_eks_node_group.eks_nodegroup: id=> node_group.id }
+  value       = { for id, node_group in aws_eks_node_group.eks_nodegroup : id => node_group.id }
 }
 
 output "node_group_public_arn" {
   description = "Node Group ARN"
-  value       = {for arn, node_group in aws_eks_node_group.eks_nodegroup: arn=> node_group.arn }
+  value       = { for arn, node_group in aws_eks_node_group.eks_nodegroup : arn => node_group.arn }
 }
 
 output "node_group_public_status" {
   description = "Public Node Group status"
-  value       = {for status, node_group in aws_eks_node_group.eks_nodegroup: status=> node_group.status }
+  value       = { for status, node_group in aws_eks_node_group.eks_nodegroup : status => node_group.status }
 }
 
 output "node_group_public_version" {
   description = "Public Node Group status"
-  value       = {for version, node_group in aws_eks_node_group.eks_nodegroup: version=> node_group.version }
+  value       = { for version, node_group in aws_eks_node_group.eks_nodegroup : version => node_group.version }
 }
 
 output "vpc_id" {
-    value = local.vpc_id
+  value = local.vpc_id
 }
 
 output "private_subnets" {
-    value = local.private_subnet
+  value = local.private_subnet
 }
