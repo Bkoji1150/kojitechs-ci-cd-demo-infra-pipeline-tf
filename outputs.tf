@@ -52,6 +52,11 @@ output "cluster_iam_role_arn" {
   value       = aws_iam_role.eks_master_role.arn
 }
 
+output "cluster_primary_security_group_id" {
+  description = "The cluster primary security group ID created by the EKS cluster on 1.14 or later. Referred to as 'Cluster security group' in the EKS console."
+  value       = local.eks_default_security_group_id
+}
+
 output "cluster_oidc_issuer_url" {
   description = "The URL on the EKS cluster OIDC Issuer"
   value       = aws_eks_cluster.eks_cluster.identity[0].oidc[0].issuer
@@ -76,4 +81,12 @@ output "node_group_public_status" {
 output "node_group_public_version" {
   description = "Public Node Group status"
   value       = {for version, node_group in aws_eks_node_group.eks_nodegroup: version=> node_group.version }
+}
+
+output "vpc_id" {
+    value = local.vpc_id
+}
+
+output "private_subnets" {
+    value = local.private_subnet
 }
