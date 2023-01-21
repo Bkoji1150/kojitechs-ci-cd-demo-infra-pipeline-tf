@@ -57,6 +57,7 @@ resource "aws_iam_policy" "this" {
           "acm:*",
           "sns:*",
           "sqs:*",
+          "eks:*",
           "ec2:DescribeNetworkInterfaces",
           "ec2:CreateNetworkInterface",
           "ec2:DeleteNetworkInterface",
