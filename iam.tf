@@ -1,5 +1,6 @@
 
 #IAM Service role.
+# "arn:aws:iam::735972722491:role/CI-CD-DEMO-NODEGROUP-ROLE"
 resource "aws_iam_role" "eks_nodegroup_role" {
   name = upper(format("%s-%s", var.component_name, "nodegroup-role"))
 
